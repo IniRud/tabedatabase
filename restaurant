@@ -1,0 +1,509 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 08, 2020 at 05:27 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `tableready`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clustertables`
+--
+
+CREATE TABLE `clustertables` (
+  `tableId` int(11) NOT NULL,
+  `clusterId` int(11) NOT NULL,
+  `tableX` int(100) DEFAULT NULL,
+  `tableY` int(100) DEFAULT NULL,
+  `tableLayoutSeatNumber` int(11) NOT NULL,
+  `restaurantArea` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `clustertables`
+--
+
+INSERT INTO `clustertables` (`tableId`, `clusterId`, `tableX`, `tableY`, `tableLayoutSeatNumber`, `restaurantArea`) VALUES
+(7, 1, 100, 100, 6, 'A'),
+(8, 2, 100, 100, 4, 'B'),
+(9, 3, 100, 100, 2, 'B'),
+(10, 4, 100, 100, 2, 'C'),
+(11, 5, 100, 100, 2, 'C'),
+(12, 6, 100, 100, 2, 'C'),
+(8, 7, 100, 100, 4, 'B'),
+(9, 7, 100, 100, 2, 'B'),
+(10, 8, 100, 100, 2, 'C'),
+(11, 8, 100, 100, 2, 'C'),
+(11, 9, 100, 100, 2, 'C'),
+(12, 9, 100, 100, 2, 'C'),
+(10, 10, 100, 100, 2, 'C'),
+(11, 10, 100, 100, 2, 'C'),
+(12, 10, 100, 100, 2, 'C');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customers`
+--
+
+CREATE TABLE `customers` (
+  `CustomerId` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`CustomerId`) VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `layoutclusters`
+--
+
+CREATE TABLE `layoutclusters` (
+  `clusterId` int(11) NOT NULL,
+  `layoutId` int(11) NOT NULL,
+  `clusterName` varchar(20) DEFAULT NULL,
+  `clusterPriority` int(11) DEFAULT NULL,
+  `clusterX` int(11) DEFAULT NULL,
+  `clusterY` int(11) DEFAULT NULL,
+  `clusterImage` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `layoutclusters`
+--
+
+INSERT INTO `layoutclusters` (`clusterId`, `layoutId`, `clusterName`, `clusterPriority`, `clusterX`, `clusterY`, `clusterImage`) VALUES
+(1, 5, 'A[6]', 3, NULL, NULL, NULL),
+(2, 5, 'B[4]', 6, NULL, NULL, NULL),
+(3, 5, 'B[2]', 10, NULL, NULL, NULL),
+(4, 5, 'C1[2]', 9, NULL, NULL, NULL),
+(5, 5, 'C2[2]', 7, NULL, NULL, NULL),
+(6, 5, 'C[3]', 8, NULL, NULL, NULL),
+(7, 5, 'B[4]B[2]', 2, NULL, NULL, NULL),
+(8, 5, 'C1[2]C[2]', 4, NULL, NULL, NULL),
+(9, 5, 'C2[2]C3[2]', 5, NULL, NULL, NULL),
+(10, 5, 'C1[2]C2[2]C3[2]', 1, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `layouts`
+--
+
+CREATE TABLE `layouts` (
+  `layoutId` int(11) NOT NULL COMMENT 'Define Restaurant Layout Id',
+  `restaurantId` int(100) NOT NULL,
+  `layoutName` varchar(20) NOT NULL COMMENT 'Define Restaurant Layout Name',
+  `layoutImage` varchar(200) DEFAULT NULL COMMENT 'File location of the restaurant layout image'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `layouts`
+--
+
+INSERT INTO `layouts` (`layoutId`, `restaurantId`, `layoutName`, `layoutImage`) VALUES
+(5, 1, 'Layout_0', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservationentries`
+--
+
+CREATE TABLE `reservationentries` (
+  `reservationId` int(100) NOT NULL,
+  `customerId` int(100) NOT NULL,
+  `restaurantId` int(100) NOT NULL,
+  `reservationPartySize` int(11) NOT NULL,
+  `reservationStatus` varchar(20) NOT NULL,
+  `reservationOrigin` varchar(20) NOT NULL,
+  `creationDateTime` datetime NOT NULL DEFAULT current_timestamp(),
+  `reservationDateTime` datetime NOT NULL,
+  `checkinDateTime` datetime DEFAULT NULL,
+  `seatingDateTime` datetime DEFAULT NULL,
+  `checkoutDateTime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reservationentries`
+--
+
+INSERT INTO `reservationentries` (`reservationId`, `customerId`, `restaurantId`, `reservationPartySize`, `reservationStatus`, `reservationOrigin`, `creationDateTime`, `reservationDateTime`, `checkinDateTime`, `seatingDateTime`, `checkoutDateTime`) VALUES
+(9, 1, 1, 6, 'confirmed', 'app', '2020-06-07 17:27:54', '2020-06-07 18:00:00', '2020-06-07 20:00:00', NULL, NULL),
+(10, 2, 1, 3, 'confirmed', 'phone', '2020-06-07 17:29:48', '2020-06-07 18:00:00', '2020-06-07 18:00:00', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservationentrytables`
+--
+
+CREATE TABLE `reservationentrytables` (
+  `reservationId` int(100) NOT NULL,
+  `tableId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restaurants`
+--
+
+CREATE TABLE `restaurants` (
+  `RestaurantId` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `restaurants`
+--
+
+INSERT INTO `restaurants` (`RestaurantId`) VALUES
+(1),
+(2),
+(3),
+(4),
+(5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tableavailability`
+--
+
+CREATE TABLE `tableavailability` (
+  `tableId` int(11) NOT NULL COMMENT 'Table Id',
+  `dateTime` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Date Time',
+  `tableAvailabilityStatus` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'Show if Table is available',
+  `tableCheckoutStatus` tinyint(1) DEFAULT 0 COMMENT 'Show if client requested checkou',
+  `tableCleaningStatus` tinyint(1) DEFAULT 0 COMMENT 'Show if table is under cleaning process',
+  `clusterId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tableavailability`
+--
+
+INSERT INTO `tableavailability` (`tableId`, `dateTime`, `tableAvailabilityStatus`, `tableCheckoutStatus`, `tableCleaningStatus`, `clusterId`) VALUES
+(7, '2020-06-06 14:04:16', 1, 0, 0, 1),
+(7, '2020-06-06 15:53:33', 0, 0, 0, 1),
+(7, '2020-06-06 16:51:28', 0, 1, 0, NULL),
+(7, '2020-06-06 16:51:59', 1, 0, 0, NULL),
+(7, '2020-06-06 17:20:01', 0, 0, 0, NULL),
+(7, '2020-06-06 17:21:13', 0, 1, 0, NULL),
+(7, '2020-06-06 20:23:48', 1, 0, 0, NULL),
+(8, '2020-06-06 15:53:33', 1, 0, 0, 2),
+(8, '2020-06-06 16:51:43', 0, 0, 0, NULL),
+(8, '2020-06-06 17:18:29', 1, 0, 0, NULL),
+(9, '2020-06-06 14:04:16', 1, 0, 0, 3),
+(9, '2020-06-06 16:51:52', 1, 0, 0, NULL),
+(10, '2020-06-06 19:05:49', 1, 0, 0, NULL),
+(11, '2020-06-06 19:06:28', 0, 0, 0, NULL),
+(11, '2020-06-06 20:24:55', 1, 0, 0, NULL),
+(12, '2020-06-06 19:06:06', 1, 0, 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tables`
+--
+
+CREATE TABLE `tables` (
+  `tableId` int(11) NOT NULL COMMENT 'Define Table Id',
+  `restaurantId` int(100) NOT NULL,
+  `tableName` varchar(10) NOT NULL COMMENT 'Table Name',
+  `tableMaxNumberSeats` int(11) NOT NULL COMMENT 'Maximum Number of Table Seats',
+  `tableImage` varchar(100) DEFAULT NULL COMMENT 'File location of the DefaultTable image',
+  `tableImageAvailable` varchar(100) DEFAULT NULL COMMENT 'File location of the Available Table image',
+  `tableImageUnavailable` varchar(100) DEFAULT NULL COMMENT 'File location of the Unavailable Table image',
+  `tableImageCheckout` varchar(100) DEFAULT NULL COMMENT 'File location of the Checkout Table image',
+  `tableImageCleaning` varchar(100) DEFAULT NULL COMMENT 'File location of the Cleaning Table image',
+  `tableType` text DEFAULT NULL COMMENT 'Table type',
+  `tableSize` text DEFAULT NULL,
+  `creationDate` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tables`
+--
+
+INSERT INTO `tables` (`tableId`, `restaurantId`, `tableName`, `tableMaxNumberSeats`, `tableImage`, `tableImageAvailable`, `tableImageUnavailable`, `tableImageCheckout`, `tableImageCleaning`, `tableType`, `tableSize`, `creationDate`) VALUES
+(7, 1, 'A[6]', 6, '', '', '', '', '', 'Rectangle', '', '2020-03-17'),
+(8, 1, 'B[4]', 4, '', '', '', '', '', 'Rectangle', '', '2019-11-11'),
+(9, 1, 'B[2]', 2, '', '', '', '', '', 'Square', '', '2019-09-17'),
+(10, 1, 'C1[2]', 2, '', '', '', '', '', 'Square', '', '2019-08-21'),
+(11, 1, 'C2[2]', 2, '', '', '', '', '', 'Square', '', '2019-08-21'),
+(12, 1, 'C3[2]', 2, '', '', '', '', '', 'Square', '', '2020-06-01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `waitlistentries`
+--
+
+CREATE TABLE `waitlistentries` (
+  `waitlistId` int(100) NOT NULL,
+  `restaurantId` int(100) NOT NULL,
+  `customerId` int(100) NOT NULL,
+  `waitlistPartySize` int(11) NOT NULL,
+  `waitlistStatus` varchar(20) NOT NULL,
+  `wailistOrigin` varchar(20) NOT NULL,
+  `checkinDateTime` datetime NOT NULL DEFAULT current_timestamp(),
+  `seatingDateTime` datetime DEFAULT NULL,
+  `checkoutDateTime` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `waitlistentries`
+--
+
+INSERT INTO `waitlistentries` (`waitlistId`, `restaurantId`, `customerId`, `waitlistPartySize`, `waitlistStatus`, `wailistOrigin`, `checkinDateTime`, `seatingDateTime`, `checkoutDateTime`) VALUES
+(3, 1, 6, 3, 'Confirmed', 'app', '2020-06-04 17:32:48', NULL, NULL),
+(4, 1, 6, 2, 'Confirmed', 'entrance', '2020-06-05 17:32:48', NULL, NULL),
+(5, 1, 7, 6, 'Confirmed', 'app', '2020-06-06 17:32:48', NULL, NULL),
+(6, 1, 3, 2, 'active', 'app', '2020-06-07 17:32:48', NULL, NULL),
+(7, 1, 4, 5, 'active', 'app', '2020-06-07 18:28:05', NULL, NULL),
+(8, 1, 5, 3, 'active', 'app', '2020-06-07 18:28:25', NULL, NULL),
+(9, 1, 5, 4, 'active', 'app', '2020-06-07 19:04:24', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `waitlistentrytables`
+--
+
+CREATE TABLE `waitlistentrytables` (
+  `waitlistId` int(100) NOT NULL,
+  `tableId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `clustertables`
+--
+ALTER TABLE `clustertables`
+  ADD PRIMARY KEY (`clusterId`,`tableId`),
+  ADD KEY `clustertables_ibfk_2` (`tableId`) USING BTREE,
+  ADD KEY `clustertables_ibfk_1` (`clusterId`) USING BTREE;
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`CustomerId`);
+
+--
+-- Indexes for table `layoutclusters`
+--
+ALTER TABLE `layoutclusters`
+  ADD PRIMARY KEY (`clusterId`),
+  ADD KEY `layoutclusters_ibfk_1` (`layoutId`) USING BTREE;
+
+--
+-- Indexes for table `layouts`
+--
+ALTER TABLE `layouts`
+  ADD PRIMARY KEY (`layoutId`),
+  ADD KEY `layouts_ibfk_1` (`restaurantId`) USING BTREE;
+
+--
+-- Indexes for table `reservationentries`
+--
+ALTER TABLE `reservationentries`
+  ADD PRIMARY KEY (`reservationId`),
+  ADD KEY `reservationentries_ibfk_1` (`restaurantId`),
+  ADD KEY `reservationentries_ibfk_2` (`customerId`);
+
+--
+-- Indexes for table `reservationentrytables`
+--
+ALTER TABLE `reservationentrytables`
+  ADD PRIMARY KEY (`reservationId`,`tableId`),
+  ADD KEY `reservationentrytables_ibfk_1` (`reservationId`) USING BTREE,
+  ADD KEY `reservationentrytables_ibfk_2` (`tableId`) USING BTREE;
+
+--
+-- Indexes for table `restaurants`
+--
+ALTER TABLE `restaurants`
+  ADD PRIMARY KEY (`RestaurantId`);
+
+--
+-- Indexes for table `tableavailability`
+--
+ALTER TABLE `tableavailability`
+  ADD PRIMARY KEY (`tableId`,`dateTime`),
+  ADD KEY `tableavailability_ibfk_2` (`clusterId`) USING BTREE,
+  ADD KEY `tableavailability_ibfk_1` (`tableId`) USING BTREE;
+
+--
+-- Indexes for table `tables`
+--
+ALTER TABLE `tables`
+  ADD PRIMARY KEY (`tableId`),
+  ADD KEY `tables_ibfk_1` (`restaurantId`) USING BTREE;
+
+--
+-- Indexes for table `waitlistentries`
+--
+ALTER TABLE `waitlistentries`
+  ADD PRIMARY KEY (`waitlistId`),
+  ADD KEY `waitlistentries_ibfk_1` (`customerId`),
+  ADD KEY `waitlistentries_ibfk_2` (`restaurantId`);
+
+--
+-- Indexes for table `waitlistentrytables`
+--
+ALTER TABLE `waitlistentrytables`
+  ADD PRIMARY KEY (`waitlistId`,`tableId`),
+  ADD KEY `waitlistentrytables_ibfk_1` (`tableId`),
+  ADD KEY `waitlistentrytables_ibfk_2` (`waitlistId`) USING BTREE;
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `CustomerId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `layoutclusters`
+--
+ALTER TABLE `layoutclusters`
+  MODIFY `clusterId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `layouts`
+--
+ALTER TABLE `layouts`
+  MODIFY `layoutId` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Define Restaurant Layout Id', AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `reservationentries`
+--
+ALTER TABLE `reservationentries`
+  MODIFY `reservationId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `restaurants`
+--
+ALTER TABLE `restaurants`
+  MODIFY `RestaurantId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tables`
+--
+ALTER TABLE `tables`
+  MODIFY `tableId` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Define Table Id', AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `waitlistentries`
+--
+ALTER TABLE `waitlistentries`
+  MODIFY `waitlistId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `clustertables`
+--
+ALTER TABLE `clustertables`
+  ADD CONSTRAINT `clustertables_ibfk_1` FOREIGN KEY (`clusterId`) REFERENCES `layoutclusters` (`clusterId`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `clustertables_ibfk_2` FOREIGN KEY (`tableId`) REFERENCES `tables` (`tableId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `layoutclusters`
+--
+ALTER TABLE `layoutclusters`
+  ADD CONSTRAINT `layoutclusters_ibfk_1` FOREIGN KEY (`layoutId`) REFERENCES `layouts` (`layoutId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `layouts`
+--
+ALTER TABLE `layouts`
+  ADD CONSTRAINT `layouts_ibfk_1` FOREIGN KEY (`restaurantId`) REFERENCES `restaurants` (`RestaurantId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `reservationentries`
+--
+ALTER TABLE `reservationentries`
+  ADD CONSTRAINT `reservationentries_ibfk_1` FOREIGN KEY (`restaurantId`) REFERENCES `restaurants` (`RestaurantId`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservationentries_ibfk_2` FOREIGN KEY (`customerId`) REFERENCES `customers` (`CustomerId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `reservationentrytables`
+--
+ALTER TABLE `reservationentrytables`
+  ADD CONSTRAINT `reservationentrytables_ibfk_1` FOREIGN KEY (`reservationId`) REFERENCES `reservationentries` (`reservationId`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservationentrytables_ibfk_2` FOREIGN KEY (`tableId`) REFERENCES `tableavailability` (`tableId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tableavailability`
+--
+ALTER TABLE `tableavailability`
+  ADD CONSTRAINT `tableavailability_ibfk_1` FOREIGN KEY (`tableId`) REFERENCES `clustertables` (`tableId`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `tableavailability_ibfk_2` FOREIGN KEY (`clusterId`) REFERENCES `clustertables` (`clusterId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tables`
+--
+ALTER TABLE `tables`
+  ADD CONSTRAINT `tables_ibfk_1` FOREIGN KEY (`restaurantId`) REFERENCES `restaurants` (`RestaurantId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `waitlistentries`
+--
+ALTER TABLE `waitlistentries`
+  ADD CONSTRAINT `waitlistentries_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customers` (`CustomerId`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `waitlistentries_ibfk_2` FOREIGN KEY (`restaurantId`) REFERENCES `restaurants` (`RestaurantId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `waitlistentrytables`
+--
+ALTER TABLE `waitlistentrytables`
+  ADD CONSTRAINT `waitlistentrytables_ibfk_1` FOREIGN KEY (`tableId`) REFERENCES `tableavailability` (`tableId`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `waitlistentrytables_ibfk_2` FOREIGN KEY (`waitlistId`) REFERENCES `waitlistentries` (`waitlistId`) ON DELETE NO ACTION ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
